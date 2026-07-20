@@ -17,6 +17,7 @@ export default async function handler(req, res) {
   }
 
   const { productId, productTitle, productUrl } = req.body;
+  console.log("Received:", { productId, productTitle, productUrl });
 
   const headers = {
     "Content-Type": "application/json",
@@ -40,15 +41,12 @@ export default async function handler(req, res) {
   });
 
   const searchData = await searchRes.json();
+  console.log("Search response:", JSON.stringify(searchData));
   const existing = searchData.data?.metaobjectByHandle;
-
-  const searchData = await searchRes.json();
-console.log("Search response:", JSON.stringify(searchData));
-
 
   if (existing) {
     const currentCount = parseInt(existing.wishlistCount?.value || "0", 10);
-    await fetch(endpoint, {
+    const updateRes = await fetch(endpoint, {
       method: "POST",
       headers,
       body: JSON.stringify({
@@ -64,8 +62,10 @@ console.log("Search response:", JSON.stringify(searchData));
         },
       }),
     });
+    const updateData = await updateRes.json();
+    console.log("Update response:", JSON.stringify(updateData));
   } else {
-    await fetch(endpoint, {
+    const createRes = await fetch(endpoint, {
       method: "POST",
       headers,
       body: JSON.stringify({
@@ -75,10 +75,6 @@ console.log("Search response:", JSON.stringify(searchData));
             userErrors { message }
           }
         }`,
-const createData = await createRes.json();
-console.log("Create response:", JSON.stringify(createData));
-
-        
         variables: {
           metaobject: {
             type: METAOBJECT_TYPE,
@@ -93,6 +89,8 @@ console.log("Create response:", JSON.stringify(createData));
         },
       }),
     });
+    const createData = await createRes.json();
+    console.log("Create response:", JSON.stringify(createData));
   }
 
   return res.status(200).json({ success: true });
