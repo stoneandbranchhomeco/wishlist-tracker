@@ -3,9 +3,19 @@ const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
 const API_VERSION = "2024-01";
 const METAOBJECT_TYPE = "sidekick_wishlist_count";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+};
+
 exports.handler = async (event) => {
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 200, headers: corsHeaders, body: "" };
+  }
+
   if (event.httpMethod !== "POST") {
-    return { statusCode: 405, body: "Method Not Allowed" };
+    return { statusCode: 405, headers: corsHeaders, body: "Method Not Allowed" };
   }
 
   const { productId, productTitle, productUrl } = JSON.parse(event.body);
@@ -79,5 +89,5 @@ exports.handler = async (event) => {
     });
   }
 
-  return { statusCode: 200, body: JSON.stringify({ success: true }) };
+  return { statusCode: 200, headers: corsHeaders, body: JSON.stringify({ success: true }) };
 };
