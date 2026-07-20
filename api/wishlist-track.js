@@ -42,6 +42,10 @@ export default async function handler(req, res) {
   const searchData = await searchRes.json();
   const existing = searchData.data?.metaobjectByHandle;
 
+  const searchData = await searchRes.json();
+console.log("Search response:", JSON.stringify(searchData));
+
+
   if (existing) {
     const currentCount = parseInt(existing.wishlistCount?.value || "0", 10);
     await fetch(endpoint, {
@@ -71,6 +75,10 @@ export default async function handler(req, res) {
             userErrors { message }
           }
         }`,
+const createData = await createRes.json();
+console.log("Create response:", JSON.stringify(createData));
+
+        
         variables: {
           metaobject: {
             type: METAOBJECT_TYPE,
