@@ -3,14 +3,10 @@ const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
 const API_VERSION = "2024-01";
 const METAOBJECT_TYPE = "sidekick_wishlist_count";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "Content-Type",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-};
-
 export default async function handler(req, res) {
-  res.set(corsHeaders);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
 
   if (req.method === "OPTIONS") {
     return res.status(200).end();
@@ -93,4 +89,3 @@ export default async function handler(req, res) {
 
   return res.status(200).json({ success: true });
 }
-
