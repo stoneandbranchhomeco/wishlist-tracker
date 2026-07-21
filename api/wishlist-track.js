@@ -1,5 +1,7 @@
 const SHOP = "stoneandbranchhomeco.myshopify.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
+console.log("Token prefix:", ADMIN_TOKEN?.substring(0, 10));
+
 const API_VERSION = "2026-07";
 const METAOBJECT_TYPE = "sidekick_wishlist_count";
 
