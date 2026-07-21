@@ -1,4 +1,4 @@
-const SHOP = "stoneandbranchhomeco.myshopify.com";
+const SHOP = "arsavm-ef.myshopify.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_TOKEN;
 console.log("Token prefix:", ADMIN_TOKEN?.substring(0, 10));
 
